@@ -1,9 +1,3 @@
-import numpy as np
-from os.path import exists
-from os.path import join
-import os
-from scipy.ndimage.morphology import grey_opening
-from skimage.transform import resize
 from scipy.ndimage.filters import median_filter
 from covertrack.utils.seg_utils import adaptive_thresh
 from preprocess_utils.preprocess_utils import homogenize_intensity_n4, wavelet_subtraction
@@ -49,10 +43,10 @@ def n4_illum_correction_downsample(img, holder, DOWN=2, RATIO=1.05, FILTERINGSIZ
 
 
 def background_subtraction_wavelet(img, holder, level=7, OFFSET=10):
-    '''
+    """
     It might be radical but works in many cases in terms of segmentation.
     Use "background_subtraction_wavelet_hazen" for a proper implementation.
-    '''
+    """
     img = wavelet_subtraction(img, level)
     return convert_positive(img, OFFSET)
 
@@ -69,9 +63,10 @@ def background_subtraction_prcblock(img, holder, BLOCK=10, OPEN=3, PERCENTILE=0.
     img = convert_positive(img, OFFSET)
     return img
 
+
 def background_subtraction_wavelet_hazen(img, holder, THRES=100, ITER=5, WLEVEL=6, OFFSET=50):
     """Wavelet background subtraction for STORM.
     """
     back = wavelet_subtraction_hazen(img, ITER=ITER, THRES=THRES, WLEVEL=WLEVEL)
-    img = img - back
+    img -= back
     return convert_positive(img, OFFSET)

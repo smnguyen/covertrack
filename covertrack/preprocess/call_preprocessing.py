@@ -50,11 +50,14 @@ class PreprocessCaller(object):
             self.save_output(imgpath)
 
     def run_operations(self):
+        """Run each preprocessing function. Functions can be restricted to only
+        run on a single channel.
+        """
         for func_args in self.argdict[ARG_VAR]:
             func_args = func_args.copy()
             func_ch = func_args.pop('ch') if 'ch' in func_args else self.ch
             if self.ch != func_ch:
-                    pass
+                pass
             else:
                 func_name = func_args.pop('name')
                 func = getattr(operations, func_name)

@@ -4,7 +4,6 @@ from scipy.ndimage import distance_transform_edt
 from skimage.measure import regionprops
 from skimage.measure import label as skim_label
 from skimage.morphology import watershed as skiwatershed
-from skimage.feature import peak_local_max
 from skimage.segmentation import find_boundaries
 from skimage.feature import peak_local_max
 from scipy.ndimage.filters import maximum_filter

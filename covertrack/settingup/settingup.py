@@ -51,6 +51,7 @@ class SettingUpCaller(object):
         self.argdict['img_shape'] = imread(self.argdict['channeldict'].values()[0][0]).shape
 
     def _set_time(self):
+        """Time is the number of frames (assumed to be the same for each channel)"""
         if 'time' not in self.argdict:
             self.argdict['time'] = range(len(self.argdict['channeldict'].values()[0]))
 
@@ -63,10 +64,16 @@ class SettingUpCaller(object):
         '''Set input arguments to ArgSet attributes.
         If imgdir is not passed to SettingUp, it will set input_parent_dir
         as imgdir.
+
+        Translates input Python file into a dict (self.argdict) that contains instructions on how
+        to run the pipeline
         '''
+
+        # ia_args is a list of all variable names
         ia_args = [a for a in dir(self.argfile) if not a.startswith('_')]
         ia_args = [a for a in ia_args if not isinstance(getattr(self.argfile, a), types.ModuleType)]
         ia_args = [a for a in ia_args if not isinstance(getattr(self.argfile, a), types.FunctionType)]
+
         for a in ia_args:
             self.argdict[a] = getattr(self.argfile, a)
         if self.imgdir is None:

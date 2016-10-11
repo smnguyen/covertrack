@@ -38,6 +38,7 @@ class SegmentationCaller(object):
         self.logger.info(self.PROCESS + ' completed.')
 
     def set_obj_ch(self, func_args):
+        """Defaults to the first channel listed in setup_args from the input if not specified"""
         self.obj = func_args.pop('object_name') if 'object_name' in func_args else 'nuclei'
         self.ch = func_args.pop('ch_img') if 'ch_img' in func_args else self.argdict['channels'][0]
 

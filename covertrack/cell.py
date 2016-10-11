@@ -1,6 +1,5 @@
 import numpy as np
 from skimage.measure import regionprops
-from copy import deepcopy
 
 PROP_SAVE = ['area', 'cell_id', 'convex_area', 'corr_x', 'corr_y', 'cv_intensity',
              'eccentricity', 'equivalent_diameter', 'euler_number', 'extent', 'filled_area',
@@ -20,8 +19,8 @@ class CellListMaker(object):
 
     def make_list(self):
         cell_prop = regionprops(self.label, self.img, cache=True)
-        celllist = [Cell(i, self.frame) for i in cell_prop]
-        return celllist
+        cell_list = [Cell(i, self.frame) for i in cell_prop]
+        return cell_list
 
 
 class CellListMakerScalar(CellListMaker):
@@ -71,6 +70,7 @@ class Prop(object):
         self.frame = np.nan
         self.abs_id = 0
         self.cell_id = 0
+
 
 class PropLight(object):
     def __init__(self, prop):

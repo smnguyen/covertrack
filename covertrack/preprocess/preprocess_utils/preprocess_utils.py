@@ -1,5 +1,4 @@
 import numpy as np
-from skimage.transform import resize
 from pywt import WaveletPacket2D
 import SimpleITK as sitk
 from wavelet_bgr import WaveletBGR
@@ -41,19 +40,20 @@ def convert_positive(img, OFFSET=50):
     # img = img + OFFSET
     return img
 
+
 def wavelet_subtraction(img, level):
     """6- 7 level is recommended"""
     if level == 0:
         return img
     wp = WaveletPacket2D(data=img, wavelet='haar', mode='sym')
-    back = resize(np.array(wp['a'*level].data), img.shape, order=3, mode='reflect')/(2**level)
-    img = img - back
+    back = resize(np.array(wp['a' * level].data), img.shape, order=3, mode='reflect') / (2 ** level)
+    img -= back
     return img
 
 
 def homogenize_intensity_n4(img, background_bw):
     simg = sitk.GetImageFromArray(img.astype(np.float32))
-    sbw = sitk.GetImageFromArray((background_bw).astype(np.uint8))
+    sbw = sitk.GetImageFromArray(background_bw.astype(np.uint8))
     fil = sitk.N4BiasFieldCorrectionImageFilter()
     cimg = fil.Execute(simg, sbw)
     return sitk.GetArrayFromImage(cimg)

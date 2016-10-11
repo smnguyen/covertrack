@@ -8,7 +8,7 @@ first_frame = None
 last_frame = None
 
 
-setup_args = ((dict(name='retrieve_files', channels=['CFP', 'YFP'])), )
+setup_args = (dict(name='retrieve_files', channels=['CFP', 'YFP']), )
 
 preprocess_args = (dict(name='background_subtraction_prcblock'), )
 
